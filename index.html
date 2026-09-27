@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>心因性休克 SCAI 分期</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF1F0; --surface:#FFFFFF; --surface-2:#F5F8F7; --ink:#14212A; --muted:#55666D; --line:#D2DBDA;
+  --accent:#0B6E69; --accent-ink:#FFFFFF; --accent-soft:#DCEEEC;
+  --ok:#2A7549; --ok-soft:#E0F0E6; --warn:#9A5700; --warn-soft:#FAEBD3; --crit:#B42318; --crit-soft:#FBE2DE;
+  --strip:#12202A; --strip-ink:#E6EEF0; --strip-muted:#93A7AF; --strip-line:#2B3D47; --strip-accent:#43C4B8;
+  --sA:#2E7D4F; --sB:#8A8A1A; --sC:#C07A00; --sD:#C2410C; --sE:#8E1B12;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-label:"IBM Plex Sans Condensed","Noto Sans TC","Arial Narrow",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0B1114; --surface:#131C20; --surface-2:#182328; --ink:#E2EAEC; --muted:#93A4AA; --line:#26353B;
+    --accent:#3CBDB2; --accent-ink:#06201E; --accent-soft:#12332F;
+    --ok:#5CC48E; --ok-soft:#12301F; --warn:#F0AA45; --warn-soft:#352409; --crit:#F2685F; --crit-soft:#3A1512;
+    --strip:#070D10; --strip-ink:#E2EAEC; --strip-muted:#8397A0; --strip-line:#223139; --strip-accent:#43C4B8;
+    --sA:#5CC48E; --sB:#C9C94A; --sC:#F0AA45; --sD:#F97316; --sE:#F2685F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B1114; --surface:#131C20; --surface-2:#182328; --ink:#E2EAEC; --muted:#93A4AA; --line:#26353B;
+  --accent:#3CBDB2; --accent-ink:#06201E; --accent-soft:#12332F;
+  --ok:#5CC48E; --ok-soft:#12301F; --warn:#F0AA45; --warn-soft:#352409; --crit:#F2685F; --crit-soft:#3A1512;
+  --strip:#070D10; --strip-ink:#E2EAEC; --strip-muted:#8397A0; --strip-line:#223139; --strip-accent:#43C4B8;
+  --sA:#5CC48E; --sB:#C9C94A; --sC:#F0AA45; --sD:#F97316; --sE:#F2685F;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+h1,h2,h3{margin:0;text-wrap:balance;line-height:1.3}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px}
+.label{font-family:var(--f-label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.strip{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--strip);color:var(--strip-ink);border-bottom:1px solid var(--strip-line)}
+.top{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding-block:10px 8px}
+.brand h1{font-family:var(--f-label);font-size:20px;font-weight:700}
+.brand p{font-size:12px;color:var(--strip-muted)}
+.ladder{display:flex;gap:4px}
+.ladder span{width:40px;height:34px;border-radius:6px;display:grid;place-items:center;font-family:var(--f-label);font-weight:700;font-size:17px;color:#fff;opacity:.3}
+.ladder span.on{opacity:1;outline:2px solid var(--strip-ink);outline-offset:1px}
+.ladder .A{background:var(--sA)}.ladder .B{background:var(--sB)}.ladder .C{background:var(--sC)}.ladder .D{background:var(--sD)}.ladder .E{background:var(--sE)}
+.ladder .mod{width:auto;padding:0 8px;background:#3B4B55;font-size:13px}
+.beds-scroll{overflow-x:auto;padding-bottom:10px;color-scheme:dark}
+.beds{display:flex;gap:6px;width:max-content;min-width:100%}
+.bedbtn{display:grid;justify-items:center;gap:2px;min-width:56px;padding:4px 6px 5px;border-radius:8px;border:1px solid var(--strip-line);background:transparent;color:var(--strip-ink);cursor:pointer;font-family:var(--f-num);font-weight:700;font-size:15px}
+.bedbtn small{font-family:var(--f-body);font-weight:600;font-size:11px;color:var(--strip-muted)}
+.bedbtn[aria-current="true"]{background:var(--strip-ink);color:var(--strip);border-color:var(--strip-ink)}
+.bedbtn[aria-current="true"] small{color:var(--strip)}
+main{padding-block:18px 48px;display:grid;gap:18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+@media (max-width:1000px){.layout{grid-template-columns:1fr}}
+.col{display:grid;gap:16px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0}
+.sec{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sec h2{font-size:18px;font-weight:700;display:flex;gap:10px;align-items:center}
+.sec h2 .n{font-family:var(--f-num);font-size:13px;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--ink);color:var(--surface)}
+.sec span{font-size:12px;color:var(--muted)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:500;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.small{padding:4px 10px;font-size:13px}
+.btn.danger{border-color:var(--crit);color:var(--crit)}
+.toast{font-size:13px;color:var(--ok)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.muted{color:var(--muted);font-size:13px}
+.sub{font-family:var(--f-label);font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.fld{display:grid;gap:3px;min-width:0}
+.fld label{font-size:12.5px;color:var(--muted)}
+.fld input,.fld select{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:6px 9px;font-family:var(--f-num)}
+.fld select{font-family:var(--f-body)}
+.fld.hit input,.fld.hit select{border-color:var(--crit);background:var(--crit-soft)}
+.unit{font-size:10.5px;color:var(--muted);font-family:var(--f-num)}
+.cks{display:grid;gap:0;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.ck{display:flex;gap:9px;align-items:flex-start;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:14.5px}
+.ck:hover{background:var(--surface-2)}
+.ck input{margin-top:4px;width:17px;height:17px;accent-color:var(--crit);flex:none}
+.ck small{display:block;color:var(--muted);font-size:12.5px}
+.ck:has(input:checked){background:var(--crit-soft)}
+.ck.ctx input{accent-color:var(--accent)}
+.ck.ctx:has(input:checked){background:var(--accent-soft)}
+.kvs{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:14px;border-top:1px dashed var(--line);padding-top:10px}
+.kvs b{font-family:var(--f-num)}
+.kvs .bad b{color:var(--crit)}
+/* 結果 */
+.result{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;border-radius:14px;padding:16px 18px;color:#fff;align-items:center}
+.result.A{background:var(--sA)}.result.B{background:var(--sB)}.result.C{background:var(--sC)}.result.D{background:var(--sD)}.result.E{background:var(--sE)}
+.result .big{font-family:var(--f-label);font-weight:700;font-size:56px;line-height:1;display:flex;align-items:flex-start}
+.result .big sup{font-size:20px;margin-left:2px}
+.result h3{font-size:20px;font-weight:700}
+.result p{font-size:14.5px;opacity:.95}
+.why{display:grid;gap:4px;font-size:14px}
+.why div{display:flex;gap:8px}
+.why b{font-family:var(--f-label);min-width:92px;color:var(--muted);font-weight:600}
+.stages{display:grid;gap:8px}
+.st{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface)}
+.st .l{width:40px;height:40px;border-radius:9px;display:grid;place-items:center;font-family:var(--f-label);font-weight:700;font-size:20px;color:#fff}
+.st.A .l{background:var(--sA)}.st.B .l{background:var(--sB)}.st.C .l{background:var(--sC)}.st.D .l{background:var(--sD)}.st.E .l{background:var(--sE)}
+.st.on{box-shadow:0 0 0 2px var(--ink)}
+.st h3{font-size:15.5px;font-weight:700}
+.st h3 small{font-weight:500;color:var(--muted);font-size:12.5px;margin-left:6px}
+.st ul{margin:4px 0 0;padding-left:18px;display:grid;gap:2px;font-size:13.5px;color:var(--muted)}
+.st.on ul{color:var(--ink)}
+.mgmt{display:grid;gap:6px}
+.mgmt ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14.5px}
+.note{font-size:13.5px;border-radius:8px;padding:9px 12px;background:var(--surface-2);border:1px solid var(--line)}
+.traj{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tj{display:grid;justify-items:center;gap:1px;font-size:11px;color:var(--muted)}
+.tj b{width:32px;height:28px;border-radius:6px;display:grid;place-items:center;font-family:var(--f-label);color:#fff;font-size:15px}
+.tj.A b{background:var(--sA)}.tj.B b{background:var(--sB)}.tj.C b{background:var(--sC)}.tj.D b{background:var(--sD)}.tj.E b{background:var(--sE)}
+.arrow{color:var(--muted)}
+.side{display:grid;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 118px)}
+@media (max-width:1000px){.side{position:static}}
+.side h2{font-size:16px;font-weight:700}
+textarea.buf{width:100%;height:130px;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:8px;font-family:var(--f-num);font-size:12.5px}
+.confirm{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--crit);flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:10px;font-size:13px;color:var(--muted)}
+footer ol{margin:0;padding-left:20px;display:grid;gap:3px}
+.disclaimer{background:var(--warn-soft);color:var(--ink);border-radius:10px;padding:10px 14px;font-size:13.5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="strip">
+  <div class="wrap top">
+    <div class="brand"><h1>心因性休克 SCAI 分期</h1><p>SCAI SHOCK 2019 · 2022 更新</p></div>
+    <div class="ladder" id="ladder"><span class="A">A</span><span class="B">B</span><span class="C">C</span><span class="D">D</span><span class="E">E</span></div>
+  </div>
+  <div class="wrap"><div class="beds-scroll"><div class="beds" id="beds"></div></div></div>
+</header>
+
+<div class="wrap">
+<main>
+  <div class="layout"><div class="col" id="main"></div><aside class="side" id="side"></aside></div>
+  <footer>
+    <div class="disclaimer"><b>僅供臨床評估輔助與教學，不取代臨床判斷。</b>SCAI 分期是描述休克嚴重度的分類，本身不規定治療；處置提示綜合其他指引與試驗，請依院內休克團隊流程。資料只存在這台裝置的瀏覽器，不會上傳；請只記錄床號。</div>
+    <div>
+      <span class="label">依據</span>
+      <ol>
+        <li>Baran DA, Grines CL, Bailey S, et al. SCAI clinical expert consensus statement on the classification of cardiogenic shock. <i>Catheter Cardiovasc Interv</i> 2019;94:29–37。</li>
+        <li>Naidu SS, Baran DA, Jentzer JC, et al. SCAI SHOCK stage classification expert consensus update: a review and incorporation of validation studies. <i>J Am Coll Cardiol</i> 2022;79:933–946；SCAI SHOCK Bedside Checklist 2022。</li>
+        <li>van Diepen S, et al. Contemporary management of cardiogenic shock: a scientific statement from the AHA. <i>Circulation</i> 2017;136:e232–e268。</li>
+        <li>Byrne RA, et al. 2023 ESC Guidelines for the management of acute coronary syndromes. <i>Eur Heart J</i> 2023;44:3720–3826。</li>
+        <li>Thiele H, et al. CULPRIT-SHOCK. <i>N Engl J Med</i> 2017；IABP-SHOCK II. <i>N Engl J Med</i> 2012；ECLS-SHOCK. <i>N Engl J Med</i> 2023；Møller JE, et al. DanGer Shock. <i>N Engl J Med</i> 2024。</li>
+      </ol>
+    </div>
+  </footer>
+</main>
+</div>
+
+<script>
+(function(){
+const KEY='scai-v1';
+const pad=x=>String(x).padStart(2,'0');
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const n=v=>{if(v===''||v==null)return NaN;const x=parseFloat(v);return isFinite(x)?x:NaN;};
+const dt=t=>{const d=new Date(t);return (d.getMonth()+1)+'/'+d.getDate()+' '+pad(d.getHours())+':'+pad(d.getMinutes());};
+const newBed=()=>({v:{vaso:'0',mcs:'none'},c:{},hist:[],note:''});
+const defS=()=>({beds:Array.from({length:12},(_,i)=>String(i+1)),bed:'1',data:{}});
+let S;
+try{S=Object.assign(defS(),JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){S=defS();}
+if(!Array.isArray(S.beds)||!S.beds.length)S.beds=defS().beds;
+if(!S.beds.includes(S.bed))S.bed=S.beds[0];
+if(!S.data||typeof S.data!=='object')S.data={};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const B_=()=>S.data[S.bed]||(S.data[S.bed]=newBed());
+
+const NAMES={A:'At risk 有風險',B:'Beginning 休克前期',C:'Classic 典型心因性休克',D:'Deteriorating 惡化',E:'Extremis 極危'};
+const DESC={A:'目前沒有心因性休克的症狀或徵象，但有發生風險。',B:'有血行動力學不穩定（相對低血壓或心搏過速），但沒有灌流不足。',C:'灌流不足，需要輸液以外的介入（藥物或機械支持）才能恢復灌流。',D:'初始支持策略未能恢復灌流，需要增加劑量、增加藥物或加上機械循環支持。',E:'急性或即將發生的循環衰竭。'};
+const MCS=[['none','無'],['iabp','IABP'],['mfp','Microaxial flow pump（Impella）'],['vaecmo','VA-ECMO'],['other','其他']];
+
+/* ---------- 計算 ---------- */
+function calc(B){
+  const v=B.v,c=B.c;
+  const sbp=n(v.sbp),dbp=n(v.dbp),hr=n(v.hr),bl=n(v.sbpBase);
+  let map=n(v.map);if(!isFinite(map)&&sbp>0&&dbp>0)map=(sbp+2*dbp)/3;
+  const lac=n(v.lac),lacPrev=n(v.lacPrev),cr=n(v.cr),crB=n(v.crBase),uo=n(v.uo),ph=n(v.ph);
+  const ci=n(v.ci),co=n(v.co),pcwp=n(v.pcwp),rap=n(v.rap),pasp=n(v.pasp),padp=n(v.padp);
+  const cpo=isFinite(map)&&co>0?map*co/451:NaN;
+  const papi=rap>0&&isFinite(pasp)&&isFinite(padp)?(pasp-padp)/rap:NaN;
+  const si=hr>0&&sbp>0?hr/sbp:NaN;
+  const vaso=+v.vaso||0,mcs=v.mcs&&v.mcs!=='none';
+  const f={
+    hypo:(sbp<90)||(map<60)||(isFinite(bl)&&isFinite(sbp)&&bl-sbp>30),
+    tachy:hr>100,
+    lac2:lac>2, lac8:lac>8,
+    lacRise:isFinite(lac)&&isFinite(lacPrev)&&lac>lacPrev&&lac>2,
+    crUp:isFinite(cr)&&crB>0&&cr>=1.5*crB,
+    uoLow:isFinite(uo)&&uo<30,
+    ci:ci<2.2, pcwp:pcwp>15, cpo:cpo<=0.6, papi:papi<1.85,
+    acid:ph<7.2};
+  f.hypoperf=f.lac2||f.uoLow||f.crUp||c.cold||c.ams||c.lft;
+  f.support=vaso>=1||mcs;
+  f.escalate=vaso>=2||mcs||c.escalate||c.worse||f.lacRise;
+  f.extremis=c.cpr||f.lac8||c.profound||c.bolus||c.multidefib||(f.acid&&f.support&&f.hypoperf);
+  let st='A',why=[];
+  if(f.extremis){st='E';why=[c.cpr&&'CPR 進行中',f.lac8&&`乳酸 ${lac} >8`,c.profound&&'最大支持下仍嚴重低血壓',c.bolus&&'需要推注升壓劑',c.multidefib&&'多次電擊',f.acid&&`pH ${ph} <7.2`].filter(Boolean);}
+  else if(f.hypoperf&&f.support&&f.escalate){st='D';why=[vaso>=2&&`${vaso} 種以上升壓或強心劑`,mcs&&'使用機械循環支持',c.escalate&&'劑量持續增加',c.worse&&'初始治療後灌流仍惡化',f.lacRise&&`乳酸上升（${lacPrev}→${lac}）且 >2`].filter(Boolean);}
+  else if(f.hypoperf){st='C';why=[f.lac2&&`乳酸 ${lac} >2`,f.uoLow&&`尿量 ${uo} <30 mL/h`,f.crUp&&'肌酸酐 ≥1.5 倍基準',c.cold&&'四肢冰冷濕黏',c.ams&&'意識改變',c.lft&&'肝功能上升'].filter(Boolean);}
+  else if(f.hypo||f.tachy){st='B';why=[f.hypo&&'相對低血壓',f.tachy&&`心率 ${hr} >100`].filter(Boolean);}
+  else why=[c.risk_ami||c.risk_hf||c.risk_other?'有心因性休克風險':'尚無不穩定或灌流不足的證據'];
+  const hemo=[f.ci&&`CI ${ci} <2.2`,f.pcwp&&`PCWP ${pcwp} >15`,f.cpo&&`CPO ${cpo.toFixed(2)} ≤0.6 W`,f.papi&&`PAPi ${papi.toFixed(2)} <1.85`].filter(Boolean);
+  return {st,why,f,map,cpo,papi,si,hemo,vaso,mcs,ca:!!c.ca};
+}
+
+/* ---------- 處置提示 ---------- */
+const MG={
+ A:['持續監測生命徵象、尿量與乳酸；每次病況改變都重新分期。','儘快找原因：12 導程心電圖、心臟超音波、troponin、BNP。','急性心肌梗塞：依 ACS 指引儘早再灌流。','避免讓血壓明顯下降的藥物（大劑量利尿劑、血管擴張劑、β 阻斷劑）。'],
+ B:['放置動脈導管，密切監測乳酸與尿量，及早發現灌流不足。','找原因並處理：STEMI 或高度懷疑冠狀動脈阻塞時緊急心導管。','評估容積：無肺水腫時可小量輸液；有容積過多時利尿。','避免 β 阻斷劑與血管擴張劑；照會心臟科並考慮聯絡休克團隊。'],
+ C:['啟動休克團隊（心臟科、加護、心臟外科）。','升壓劑首選 norepinephrine；低心輸出時加強心劑（dobutamine 或 milrinone）。','強烈建議做侵入性血行動力學監測（肺動脈導管：CI、PCWP、CPO、PAPi），依表型調整治療。','急性心肌梗塞休克：緊急 PCI，多條血管病變時只處理罪犯血管（CULPRIT-SHOCK）。','不常規使用 IABP（IABP-SHOCK II）；STEMI 休克的特定病人可考慮 microaxial flow pump（DanGer Shock 2024）。','監測並支持器官功能（呼吸、腎、肝）。'],
+ D:['重新檢視診斷：容積狀態、機械性併發症（乳頭肌斷裂、心室中隔破裂、游離壁破裂）、心包填塞、右心衰竭、合併敗血性休克。','由休克團隊決定升級：更換或加上機械循環支持；VA-ECMO 需評估左心減壓。','急性心肌梗塞休克常規使用 VA-ECMO 未降低死亡率（ECLS-SHOCK 2023），需個別化選擇。','醫院無 MCS 能力時，儘早轉診至有休克中心的醫院。','提早討論治療目標、是否適合心臟移植或長期心室輔助器。'],
+ E:['循環衰竭或心跳停止：依 ACLS 處理；特定病人可考慮 ECPR。','由多專科團隊快速決定是否使用 VA-ECMO 或其他 MCS。','同時處理嚴重酸中毒、心律不整與呼吸衰竭。','與家屬溝通預後與治療目標，必要時討論限制或撤除維生治療。']};
+
+/* ---------- 渲染 ---------- */
+function renderBeds(){
+  $('#beds').innerHTML=S.beds.map(b=>{const B=S.data[b];let lab='—';
+    if(B&&(Object.keys(B.c).length||Object.keys(B.v).length>2)){const r=calc(B);lab=r.st+(r.ca?'-CA':'');}
+    return `<button type="button" class="bedbtn" data-bed="${esc(b)}" aria-current="${b===S.bed}">${esc(b)}<small>${lab}</small></button>`;}).join('');
+}
+function render(){
+  const a=document.activeElement;let fk=null,sel=null;
+  if(a&&a.id){fk='#'+CSS.escape(a.id);try{sel=[a.selectionStart,a.selectionEnd];}catch(e){}}
+  const B=B_(),r=calc(B),f=r.f;
+  renderBeds();
+  $('#ladder').innerHTML=['A','B','C','D','E'].map(s=>`<span class="${s} ${r.st===s?'on':''}">${s}</span>`).join('')+(r.ca?'<span class="mod on">CA</span>':'');
+  const fld=(k,l,u,hit)=>`<div class="fld ${hit?'hit':''}"><label for="v-${k}">${l}${u?` <span class="unit">${u}</span>`:''}</label><input id="v-${k}" data-v="${k}" inputmode="decimal" value="${esc(B.v[k]??'')}"></div>`;
+  const ck=(k,l,sub,cls)=>`<label class="ck ${cls||''}" for="c-${k}"><input type="checkbox" id="c-${k}" data-c="${k}" ${B.c[k]?'checked':''}><span>${l}${sub?`<small>${sub}</small>`:''}</span></label>`;
+  let h=`<div class="result ${r.st}"><div class="big">${r.st}${r.ca?'<sup>CA</sup>':''}</div><div><h3>SCAI SHOCK ${r.st}：${NAMES[r.st]}</h3><p>${DESC[r.st]}${r.ca?' 合併心跳停止修飾詞（CA）：昏迷、需擔心缺氧性腦傷。':''}</p></div></div>
+    <div class="panel"><div class="why"><div><b>判定依據</b><span>${r.why.join('、')||'—'}</span></div>${r.hemo.length?`<div><b>血行動力學</b><span>${r.hemo.join('、')}</span></div>`:''}</div></div>`;
+  h+=`<section class="panel"><div class="sec"><h2><span class="n">1</span>床邊與檢驗</h2><span>依 SCAI 2022 床邊檢核表；數值會自動判斷</span></div>
+    <div class="grid">${fld('sbp','收縮壓','mmHg',n(B.v.sbp)<90)}${fld('dbp','舒張壓','mmHg')}${fld('map','MAP','mmHg，可留空自動算',r.map<60)}${fld('sbpBase','平時收縮壓','mmHg')}${fld('hr','心率','次/分',f.tachy)}
+      ${fld('lac','乳酸','mmol/L',f.lac2)}${fld('lacPrev','前次乳酸','mmol/L')}${fld('cr','肌酸酐','mg/dL',f.crUp)}${fld('crBase','基準肌酸酐','mg/dL')}${fld('uo','尿量','mL/h',f.uoLow)}${fld('ph','pH','',f.acid)}</div>
+    <div class="kvs"><span class="${r.map<60?'bad':''}">MAP <b>${isFinite(r.map)?Math.round(r.map):'—'}</b></span><span class="${r.si>=1?'bad':''}">休克指數 <b>${isFinite(r.si)?r.si.toFixed(2):'—'}</b></span><span>低血壓 <b>${f.hypo?'是':'否'}</b></span><span>灌流不足 <b>${f.hypoperf?'是':'否'}</b></span></div>
+    <span class="sub">身體檢查與其他</span>
+    <div class="cks">${ck('cold','四肢冰冷濕黏、皮膚花斑')}${ck('ams','急性意識改變')}${ck('lft','肝功能上升')}${ck('overload','容積過多、廣泛囉音')}</div>
+    <span class="sub">高風險背景（Stage A）</span>
+    <div class="cks">${ck('risk_ami','大範圍或前壁急性心肌梗塞','','ctx')}${ck('risk_hf','急性或慢性心衰竭急性惡化','','ctx')}${ck('risk_other','其他（心肌炎、瓣膜疾病、心律不整等）','','ctx')}</div></section>`;
+  h+=`<section class="panel"><div class="sec"><h2><span class="n">2</span>目前支持與病程</h2><span>決定 C、D、E</span></div>
+    <div class="grid"><div class="fld"><label for="v-vaso">升壓或強心劑種類數</label><select id="v-vaso" data-sel="vaso">${['0','1','2','3'].map(x=>`<option value="${x}" ${B.v.vaso===x?'selected':''}>${x==='3'?'3 種以上':x}</option>`).join('')}</select></div>
+      <div class="fld"><label for="v-mcs">機械循環支持</label><select id="v-mcs" data-sel="mcs">${MCS.map(([k,l])=>`<option value="${k}" ${B.v.mcs===k?'selected':''}>${l}</option>`).join('')}</select></div></div>
+    <div class="cks">${ck('escalate','升壓劑或強心劑劑量持續增加')}${ck('worse','初始治療至少 30 分鐘後，灌流仍未改善或惡化','SCAI：Stage D 需經過適當初始治療')}
+      ${ck('profound','最大支持下仍嚴重低血壓')}${ck('bolus','需要推注升壓劑')}${ck('multidefib','多次電擊')}${ck('cpr','CPR 進行中')}
+      ${ck('ca','心跳停止後昏迷（GCS <9），擔心缺氧性腦傷','2022 CA 修飾詞：短暫、電擊後迅速恢復者不算')}</div></section>`;
+  h+=`<section class="panel"><div class="sec"><h2><span class="n">3</span>侵入性血行動力學</h2><span>SCAI 2022：Stage C 強烈建議；也用於判斷表型</span></div>
+    <div class="grid">${fld('ci','CI','L/min/m²',f.ci)}${fld('co','CO','L/min')}${fld('pcwp','PCWP','mmHg',f.pcwp)}${fld('rap','RAP','mmHg')}${fld('pasp','PA 收縮壓','mmHg')}${fld('padp','PA 舒張壓','mmHg')}</div>
+    <div class="kvs"><span class="${f.cpo?'bad':''}">CPO <b>${isFinite(r.cpo)?r.cpo.toFixed(2):'—'}</b> W <small class="muted">MAP × CO ÷ 451</small></span><span class="${f.papi?'bad':''}">PAPi <b>${isFinite(r.papi)?r.papi.toFixed(2):'—'}</b> <small class="muted">(PASP − PADP) ÷ RAP；&lt;1.85 提示右心衰竭</small></span>${isFinite(n(B.v.rap))&&isFinite(n(B.v.pcwp))&&n(B.v.pcwp)>0?`<span>RAP/PCWP <b>${(n(B.v.rap)/n(B.v.pcwp)).toFixed(2)}</b> <small class="muted">≥0.8 提示右心為主</small></span>`:''}</div></section>`;
+  h+=`<section class="panel"><div class="sec"><h2><span class="n">4</span>處置提示：Stage ${r.st}</h2><span>綜合 AHA 2017 科學聲明、ESC 2023 ACS 指引與近期試驗</span></div>
+    <div class="mgmt"><ul>${MG[r.st].map(x=>`<li>${x}</li>`).join('')}${r.ca?'<li>心跳停止後昏迷：依 ROSC 後照護（體溫控制、72 小時後神經預後評估）；預後常取決於神經恢復。</li>':''}</ul></div>
+    <div class="note">SCAI 分期本身只描述嚴重度，不規定治療。分期會隨病程變化：到院時、每次處置後與病況改變時都要重新分期（SCAI 2022）；可按右側「記錄這次分期」追蹤病程。</div></section>`;
+  h+=`<section class="panel"><div class="sec"><h2>SCAI 五期對照</h2><span>2022 床邊檢核表</span></div><div class="stages">
+    ${[['A','At risk','正常 JVP、溫暖灌流良好、脈搏有力、意識正常、肺音清','乳酸正常、腎功能正常或為基準值','SBP >100（或平時值）；CI >2.5、CVP <10、PCWP <15、PA sat >65%'],
+       ['B','Beginning','JVP 上升、肺部囉音，但溫暖灌流良好、意識正常','乳酸正常、腎功能輕微變化、BNP 上升','SBP <90、MAP <60 或較平時下降 >30 mmHg；HR >100'],
+       ['C','Classic','容積過多、意識改變、冰冷濕黏、廣泛囉音、尿量 <30 mL/h','乳酸 >2、肌酸酐 1.5 倍或 GFR 下降 >50%、肝功能上升、BNP 上升','CI <2.2、PCWP >15（強烈建議侵入性監測）'],
+       ['D','Deteriorating','符合 C，且初始治療後灌流不足的症狀未改善或惡化','乳酸持續上升且 >2、腎功能與肝功能惡化、BNP 上升','需增加升壓劑劑量或種類，或加上 MCS 才能維持灌流'],
+       ['E','Extremis','通常無意識、幾乎摸不到脈搏、心臟衰竭崩潰、多次電擊','乳酸 >8、CPR、嚴重酸中毒（pH <7.2）','最大支持下仍嚴重低血壓；需推注升壓劑']].map(([s,t,a,b,c])=>`<div class="st ${s} ${r.st===s?'on':''}"><span class="l">${s}</span><div><h3>${t}<small>${NAMES[s].split(' ')[1]}</small></h3><ul><li><b>身體檢查：</b>${a}</li><li><b>檢驗：</b>${b}</li><li><b>血行動力學：</b>${c}</li></ul></div></div>`).join('')}
+    <div class="st"><span class="l" style="background:#3B4B55;font-size:14px">CA</span><div><h3>心跳停止修飾詞<small>2022 修訂</small></h3><ul><li>心跳停止且擔心缺氧性腦傷（昏迷，多為 GCS &lt;9）；短暫且電擊後迅速恢復者不適用。</li><li>2019 版 Stage E 乳酸門檻為 ≥5 mmol/L，2022 版改為 &gt;8 mmol/L。</li></ul></div></div>
+  </div></section>
+  <section class="panel"><label class="label" for="note">備註</label><textarea id="note" data-note style="width:100%;min-height:60px;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:8px">${esc(B.note)}</textarea></section>`;
+  $('#main').innerHTML=h;
+  $('#side').innerHTML=`<section class="panel"><h2>床 ${esc(S.bed)} 病程</h2>
+      ${B.hist.length?`<div class="traj">${B.hist.map((x,i)=>`${i?'<span class="arrow">→</span>':''}<span class="tj ${x.st}"><b>${x.st}${x.ca?'ᶜᵃ':''}</b>${dt(x.t).split(' ')[1]}</span>`).join('')}</div>`:'<p class="muted">尚未記錄。每次重新評估後按下方按鈕，追蹤分期變化。</p>'}
+      <div class="row" style="align-items:center"><button type="button" class="btn small primary" data-act="rec">記錄這次分期（${r.st}${r.ca?'-CA':''}）</button>${B.hist.length?'<button type="button" class="btn small" data-act="undo">刪除最後一筆</button>':''}</div>
+      <div class="row" style="align-items:center"><button type="button" class="btn small" data-act="copy">複製摘要</button><span class="toast" id="toast" aria-live="polite"></span></div>
+      <textarea class="buf" id="buf" hidden readonly aria-label="摘要"></textarea></section>
+    <section class="panel"><div class="row" style="align-items:center"><button type="button" class="btn small danger" data-act="clearAsk">清除此床</button><span class="confirm" id="clr" hidden>確定清除床 ${esc(S.bed)}？<button type="button" class="btn small danger" data-act="clearYes">清除</button><button type="button" class="btn small" data-act="clearNo">取消</button></span></div>
+      <details><summary style="cursor:pointer;font-weight:700">床號設定</summary><div class="fld" style="margin-top:8px"><label for="set-beds">床號（逗號或空白分隔）</label><input id="set-beds" value="${esc(S.beds.join(', '))}"></div><button type="button" class="btn small primary" style="margin-top:8px" data-act="saveBeds">儲存</button></details></section>`;
+  const el=fk&&$(fk);if(el){el.focus({preventScroll:true});if(sel&&sel[0]!=null)try{el.setSelectionRange(sel[0],sel[1]);}catch(e){}}
+}
+function summary(){
+  const B=B_(),r=calc(B),v=B.v;
+  const L=[`【床 ${S.bed}】心因性休克 SCAI SHOCK ${r.st}${r.ca?'（CA 修飾詞）':''}：${NAMES[r.st]}`,`依據：${r.why.join('、')}`];
+  const vals=[v.sbp&&`BP ${v.sbp}/${v.dbp||'-'}`,isFinite(r.map)&&`MAP ${Math.round(r.map)}`,v.hr&&`HR ${v.hr}`,v.lac&&`乳酸 ${v.lac}`,v.uo&&`尿量 ${v.uo} mL/h`,v.ph&&`pH ${v.ph}`].filter(Boolean);if(vals.length)L.push(vals.join('、'));
+  L.push(`支持：升壓或強心劑 ${v.vaso==='3'?'≥3':v.vaso} 種；MCS ${(MCS.find(x=>x[0]===v.mcs)||['','無'])[1]}`);
+  if(r.hemo.length)L.push('血行動力學：'+r.hemo.join('、'));
+  if(B.hist.length)L.push('病程：'+B.hist.map(x=>`${dt(x.t)} ${x.st}${x.ca?'-CA':''}`).join(' → '));
+  if(B.note)L.push('備註：'+B.note);
+  return L.join('\n');
+}
+document.addEventListener('click',e=>{
+  const bb=e.target.closest('[data-bed]');if(bb){S.bed=bb.dataset.bed;save();render();return;}
+  const a=e.target.closest('[data-act]');if(!a)return;const B=B_();
+  switch(a.dataset.act){
+    case 'rec':{const r=calc(B);B.hist.push({t:Date.now(),st:r.st,ca:r.ca});break;}
+    case 'undo':B.hist.pop();break;
+    case 'copy':{const text=summary(),toast=$('#toast'),buf=$('#buf');
+      const ok=()=>{toast.textContent='已複製';setTimeout(()=>{const t=$('#toast');if(t)t.textContent='';},2000);};
+      const fail=()=>{buf.value=text;buf.hidden=false;buf.select();toast.textContent='無法自動複製，請手動複製下方文字';};
+      try{navigator.clipboard.writeText(text).then(ok,fail);}catch(err){fail();}return;}
+    case 'clearAsk':$('#clr').hidden=false;a.hidden=true;return;
+    case 'clearNo':$('#clr').hidden=true;$('[data-act="clearAsk"]').hidden=false;return;
+    case 'clearYes':S.data[S.bed]=newBed();break;
+    case 'saveBeds':{const b=$('#set-beds').value.split(/[,，\s]+/).map(v=>v.trim()).filter(Boolean);if(b.length){S.beds=[...new Set(b)];if(!S.beds.includes(S.bed))S.bed=S.beds[0];}break;}
+    default:return;
+  }
+  save();render();
+});
+document.addEventListener('change',e=>{const t=e.target,B=B_();
+  if(t.matches('[data-c]'))B.c[t.dataset.c]=t.checked;
+  else if(t.matches('[data-sel]'))B.v[t.dataset.sel]=t.value;
+  else return;
+  save();render();});
+document.addEventListener('input',e=>{const t=e.target;
+  if(t.matches('[data-v]')){B_().v[t.dataset.v]=t.value;save();render();}
+  else if(t.matches('[data-note]')){B_().note=t.value;save();}});
+render();
+})();
+</script>
+</body>
+</html>
